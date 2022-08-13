@@ -1,0 +1,109 @@
+{
+	"info": {
+		"_postman_id": "3e544cdd-6131-4c21-bd90-5198b12f910e",
+		"name": "UserAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Create User",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Caio\",\n    \"images\": [\n        {\"base64\": \"dGVzdGFuZG8=\"},\n        {\"base64\": \"dGVzdGFuZG8=\"},\n        {\"base64\": \"dGVzdGFuZG8=\"},\n        {\"base64\": \"dGVzdGFuZG8=\"}\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://0.0.0.0:8000/users",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8000",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Users",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Caio\",\n    \"images\": [\n        {\"base64\": \"dGVzdGFuZG8=\"},\n        {\"base64\": \"dGVzdGFuZG8=\"},\n        {\"base64\": \"dGVzdGFuZG8=\"},\n        {\"base64\": \"dGVzdGFuZG8=\"}\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://0.0.0.0:8000/users",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8000",
+					"path": [
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Users Copy",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\": \"Caio\",\n    \"images\": [\n        {\"base64\": \"dGVzdGFuZG8=\"},\n        {\"base64\": \"dGVzdGFuZG8=\"},\n        {\"base64\": \"dGVzdGFuZG8=\"},\n        {\"base64\": \"dGVzdGFuZG8=\"}\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://0.0.0.0:8000/users/29",
+					"protocol": "http",
+					"host": [
+						"0",
+						"0",
+						"0",
+						"0"
+					],
+					"port": "8000",
+					"path": [
+						"users",
+						"29"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

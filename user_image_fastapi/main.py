@@ -28,42 +28,9 @@ def get_db():
         db.close()
 
 
-users = []
-last_id = 0
-
-
-class Model(Enum):
-    shufflenet = "Shufflenet"
-    densenet = "Densenet"
-    tf = "tensorflow"
-
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
-
-
-@app.get("/echo/{id}")
-async def echo(id: int):
-    return {"id": id}
-
-
-@app.get("/model/{model}")
-async def model(model: Model):
-    return {"model_name": model, "Description": f"Thats is the {model.value}"}
-
-
-@app.post("/client")
-async def insert_client(user: UserCreate):
-    last_id = len(users) + 1
-    # user.id = last_id
-    users.append(user)
-    return {"user": users}
-
-
 @app.post("/users", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
-    # db_user = crud.get_user_by_email(db, email=user.email)
+
     new_user = crud.create_user(db=db, user=user)
     novas_imagens = [Image]
     if user.images is not None:
@@ -73,10 +40,27 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
                 db=db, image=ImageCreate2(**image.dict()), user_id=new_user.id
             )
 
-    # if db_user:
-    #    raise HTTPException(status_code=400, detail="Email already registered")
-    # novo_usuario = schemas.User(id=123, name="forcado", images=[])
+    for image in new_user.images:
+        image.base64 = base64.encodebytes(image.base64).decode("ascii")[:-1]
+    # print(base64.encode(new_user.images[0].base64))
     return new_user
+
+
+@app.get("/users", response_model=list[schemas.User])
+def list_users(db: Session = Depends(get_db)):
+    users = crud.get_users(db=db)
+    for user in users:
+        for image in user.images:
+            image.base64 = base64.encodebytes(image.base64).decode("ascii")[:-1]
+    return users
+
+
+@app.get("/users/{user_id}", response_model=schemas.User)
+def list_users(user_id: int, db: Session = Depends(get_db)):
+    user = crud.get_user(db=db, user_id=user_id)
+    for image in user.images:
+        image.base64 = base64.encodebytes(image.base64).decode("ascii")[:-1]
+    return user
 
 
 if __name__ == "__main__":
