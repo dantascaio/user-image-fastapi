@@ -25,36 +25,71 @@
                     <br>
                     <div class="p-col-2">
                         <button pButton type="button" [attr.aria-label]="'Criar Nova Carteira'"
-                            label="Cadastrar Novo Usuário" [disabled]="!form.valid"
-                            (click)="InputUsuario()"></button>
+                            label="Cadastrar Novo Usuário" [disabled]="!form.valid" (click)="InputUsuario()"></button>
                     </div>
                 </div>
             </form>
         </p-panel>
     </div>
 </div>
-<p-panel header="Lista de todos os usuários cadastrados.">
+<p-panel header="Lista de todos os usuários cadastrados." [hidden]="userSourcer.length == 0">
     <p-table [value]="userSourcer" dataKey="id" responsiveLayout="scroll" [scrollable]="true" scrollHeight="400px">
 
         <ng-template pTemplate="header">
             <tr>
+                <th style="width: 10%"></th>
                 <th>Id do Usuário</th>
                 <th>Nome do Usuário</th>
-                <th> Imagem do Perfil</th>
-                <th style="width: 10%"></th>
+                <th> Possui Imagem?</th>
             </tr>
         </ng-template>
-        <ng-template pTemplate="body" let-user>
+        <ng-template pTemplate="body" let-user let-expanded="expanded">
             <tr [pSelectableRow]="user">
+                <td style="width: 5%">
+                    <button type="button" pButton pRipple [pRowToggler]="user"
+                        class="p-button-text p-button-rounded p-button-plain"
+                        [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                </td>
                 <td>{{ user.id }}</td>
                 <td>{{ user.name }}</td>
-                <td><img [src]="MyImageSafe" width="100px" height="100px" /></td>
-                <td style="width: 10%">
-                    <button class="p-button-rounded p-button-success p-button-text" type="button"
-                        pTooltip="Visualizar Filiais" tooltipPosition="bottom" [showDelay]="500" pButton pRipple
-                        icon="pi pi-chevron-right"></button>
-                </td>
+                <td> {{user.images.length > 0 ? "Sim" : "Não"}} </td>
             </tr>
         </ng-template>
+        <ng-template pTemplate="rowexpansion" let-user>
+            <tr>
+              <td colspan="6">
+                <div class="p-3">
+                  <p-table [value]="user.images">
+                    <ng-template pTemplate="header">
+                      <tr>
+                        <th style="width: 25.5%">Id da Imagem</th>
+                        <th style="width: 50.5%">Imagem</th>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-images>
+                      <tr>
+                        <td>
+                          {{ images.id}}
+                        </td>
+                        <td><img [src]="images.base64Safe" width="200px" height="200px" /></td>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="emptymessage">
+                      <tr>
+                        <td colspan="6">Nenhuma Imagem</td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
     </p-table>
 </p-panel>
+<div class="p-grid" style="text-align:center">
+    <div class="p-col">
+        <span *ngIf="userSourcer.length == 0">
+            <p>Nenhum Usuário Cadastrado!</p>
+        </span>
+    </div>
+</div>

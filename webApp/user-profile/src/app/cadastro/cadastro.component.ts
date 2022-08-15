@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CadastroService, IAllUsers, INewUser, INewImages } from './cadastro.service';
+import { CadastroService, IAllUsers, INewUser, INewImages, IImageAux } from './cadastro.service';
 import { FormGroup, Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { Observable, Subscriber } from 'rxjs';
@@ -13,8 +13,8 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 export class CadastroComponent implements OnInit {
   form!: FormGroup;
   myImage!:Observable<any>;
-  myImageAux!:string;
-  MyImageSafe!: SafeUrl;
+  myImageAux!:string
+  MyImageSafe!: SafeUrl[];
   base64code!:any
 
   onChange = ($event: Event) => {
@@ -88,26 +88,57 @@ export class CadastroComponent implements OnInit {
     this.cadastroService
     .listarTodosUsuarios()
     .subscribe((resp) => {
-      (this.userSourcer = resp),
-      this.myImageAux = this.userSourcer[0].images[0].base64.replace(/data/g,"data:")
-      this.myImageAux = this.myImageAux.replace(/jpegbase64/g,"jpeg;base64,")
-     
-      this.MyImageSafe = this.sanatizer.bypassSecurityTrustUrl(this.myImageAux)
+      this.userSourcer = resp;
+      if (this.userSourcer.length > 0) {
+        this.userSourcer.forEach((user) => {
+          if (user.images != undefined) {
+            if (user.images.length > 0){
+              user.images.forEach((userImage) => {
+                this.myImageAux = userImage.base64.replace(/data/g,"data:")
+                this.myImageAux = this.myImageAux
+                this.myImageAux = this.myImageAux.replace(/jpegbase64/g,"jpeg;base64,")
+                this.sanatizer.bypassSecurityTrustUrl(userImage.base64)
+                userImage.base64Safe = this.sanatizer.bypassSecurityTrustUrl(this.myImageAux)
+              })
+              
+              // this.myImageAux = user.images.map(
+              //   ({ base64 }) => ({ base64 })
+              // )
+
+            }
+          }
+        }
+
+        )
+      }
+
     });
+    
+    // => {
+    //   (this.userSourcer = resp),
+    //   if (this.userSourcer.length > 0) {
+
+    //   }
+
+    //   // this.myImageAux = this.userSourcer[0].images[0].base64.replace(/data/g,"data:")
+    //   // this.myImageAux = this.myImageAux.replace(/jpegbase64/g,"jpeg;base64,")
+     
+    //   // this.MyImageSafe = this.sanatizer.bypassSecurityTrustUrl(this.myImageAux)
+    // });
   }
 
   InputUsuario(){
-    console.log("dentro do input")
     this.newUser.name = this.form.value.name
     this.newUser.images = [{
       base64: this.base64code
     }]
-  
-
-    this.cadastroService
+      this.cadastroService
     .cadastrarUsuario(this.newUser)
-    .subscribe(() => {});
-    this.listAllUsers();
+    .subscribe(() => {
+      this.listAllUsers();
+    }
+    );
+    
   }
 
 

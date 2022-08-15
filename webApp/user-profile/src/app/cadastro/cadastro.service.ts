@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { SafeUrl } from '@angular/platform-browser';
 
 export interface IAllUsers {
     name: string;
@@ -11,6 +12,7 @@ export interface IAllUsers {
     base64: string;
     id: number;
     user_id: number;
+    base64Safe: SafeUrl
   }
 
   export interface INewUser {
@@ -20,6 +22,10 @@ export interface IAllUsers {
 
   export interface INewImages {
     base64: Observable<any>;
+  }
+
+  export interface IImageAux{
+    base64: string;
   }
 
 
