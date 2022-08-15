@@ -3,6 +3,8 @@ import { CadastroService, IAllUsers, INewUser, INewImages } from './cadastro.ser
 import { FormGroup, Validators } from '@angular/forms';
 import { FormBuilder } from '@angular/forms';
 import { Observable, Subscriber } from 'rxjs';
+
+import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 @Component({
   selector: 'app-cadastro',
   templateUrl: './cadastro.component.html',
@@ -12,6 +14,7 @@ export class CadastroComponent implements OnInit {
   form!: FormGroup;
   myImage!:Observable<any>;
   myImageAux!:string;
+  MyImageSafe!: SafeUrl;
   base64code!:any
 
   onChange = ($event: Event) => {
@@ -69,6 +72,7 @@ export class CadastroComponent implements OnInit {
   constructor(
     private cadastroService : CadastroService,
     private formBuilder: FormBuilder,
+    private sanatizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
@@ -88,6 +92,7 @@ export class CadastroComponent implements OnInit {
       this.myImageAux = this.userSourcer[0].images[0].base64.replace(/data/g,"data:")
       this.myImageAux = this.myImageAux.replace(/jpegbase64/g,"jpeg;base64,")
      
+      this.MyImageSafe = this.sanatizer.bypassSecurityTrustUrl(this.myImageAux)
     });
   }
 

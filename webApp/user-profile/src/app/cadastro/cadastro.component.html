@@ -21,7 +21,6 @@
                     </div>
                     <div *ngIf="myImage">
                         <img [src]="myImage" width="100px" height="100px" />
-                        <img [src]="myImageAux" width="100px" height="100px" />
                     </div>
                     <br>
                     <div class="p-col-2">
@@ -41,6 +40,7 @@
             <tr>
                 <th>Id do Usuário</th>
                 <th>Nome do Usuário</th>
+                <th> Imagem do Perfil</th>
                 <th style="width: 10%"></th>
             </tr>
         </ng-template>
@@ -48,6 +48,7 @@
             <tr [pSelectableRow]="user">
                 <td>{{ user.id }}</td>
                 <td>{{ user.name }}</td>
+                <td><img [src]="MyImageSafe" width="100px" height="100px" /></td>
                 <td style="width: 10%">
                     <button class="p-button-rounded p-button-success p-button-text" type="button"
                         pTooltip="Visualizar Filiais" tooltipPosition="bottom" [showDelay]="500" pButton pRipple
