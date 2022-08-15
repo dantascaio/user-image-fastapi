@@ -16,6 +16,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import {FileUploadModule} from 'primeng/fileupload';
+import {TooltipModule} from 'primeng/tooltip';
+import {AccordionModule} from 'primeng/accordion';
 
 
 @NgModule({
@@ -37,7 +39,9 @@ import {FileUploadModule} from 'primeng/fileupload';
     ReactiveFormsModule,
     InputTextModule,
     InputNumberModule,
-    FileUploadModule
+    FileUploadModule,
+    TooltipModule,
+    AccordionModule
 
 
   ],
