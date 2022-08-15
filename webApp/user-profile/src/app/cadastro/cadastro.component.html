@@ -1,33 +1,39 @@
-<div>
-    {{userSourcer[1].images[0].base64}}
-</div>    
-    <div class="p-fluid p-grid">
-        <div class="p-col-4">
-          <p-panel header="Cadstrar um novo usuário">
+<div class="p-fluid p-grid">
+    <div class="p-col-4">
+        <p-panel header="Cadstrar um novo usuário">
             <form [formGroup]="form">
-              <div class="p-grid">
-                <div class="p-field p-col-4">
-                  <label>
-                    <strong>Nome do Usuário</strong>
-                  </label>
-                  <br />
-                  <input pInputText type="text" placeholder="Nome do Usuário" formControlName="name">
+                <div class="p-grid">
+                    <div class="p-field p-col-4">
+                        <label>
+                            <strong>Nome do Usuário</strong>
+                        </label>
+                        <br />
+                        <input pInputText type="text" placeholder="Nome do Usuário" formControlName="name">
+                    </div>
+                    <br>
+                    <div class="p-field p-col-4">
+                        <label>
+                            <strong>Imagem de Perfil</strong>
+                        </label>
+                        <br /> <br>
+                        <input pInputText type="file" (change)="onChange($event)" placeholder="Upload da imagem"
+                            formControlName="image" />
+                    </div>
+                    <div *ngIf="myImage">
+                        <img [src]="myImage" width="100px" height="100px" />
+                        <img [src]="myImageAux" width="100px" height="100px" />
+                    </div>
+                    <br>
+                    <div class="p-col-2">
+                        <button pButton type="button" [attr.aria-label]="'Criar Nova Carteira'"
+                            label="Cadastrar Novo Usuário" [disabled]="!form.valid"
+                            (click)="InputUsuario()"></button>
+                    </div>
                 </div>
-                <div class="p-col-2">
-                  <button
-                  pButton
-                  type="button"
-                  [attr.aria-label]="'Criar Nova Carteira'"
-                  label="Cadastrar Novo Usuário"
-                  [disabled]="!form.valid"
-                  (click)="cadastrarUsuario()"
-                  ></button>
-                </div>
-              </div>
             </form>
-          </p-panel>
-        </div>
-      </div>
+        </p-panel>
+    </div>
+</div>
 <p-panel header="Lista de todos os usuários cadastrados.">
     <p-table [value]="userSourcer" dataKey="id" responsiveLayout="scroll" [scrollable]="true" scrollHeight="400px">
 
@@ -40,21 +46,14 @@
         </ng-template>
         <ng-template pTemplate="body" let-user>
             <tr [pSelectableRow]="user">
-              <td>{{ user.id }}</td>
-              <td>{{ user.name }}</td>
-              <td style="width: 10%">
-                <button
-                  class="p-button-rounded p-button-success p-button-text"
-                  type="button"
-                  pTooltip="Visualizar Filiais"
-                  tooltipPosition="bottom"
-                  [showDelay]="500"
-                  pButton
-                  pRipple
-                  icon="pi pi-chevron-right"
-                ></button>
-              </td>
+                <td>{{ user.id }}</td>
+                <td>{{ user.name }}</td>
+                <td style="width: 10%">
+                    <button class="p-button-rounded p-button-success p-button-text" type="button"
+                        pTooltip="Visualizar Filiais" tooltipPosition="bottom" [showDelay]="500" pButton pRipple
+                        icon="pi pi-chevron-right"></button>
+                </td>
             </tr>
-          </ng-template>
+        </ng-template>
     </p-table>
 </p-panel>

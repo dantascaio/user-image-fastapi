@@ -15,6 +15,7 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
+import {FileUploadModule} from 'primeng/fileupload';
 
 
 @NgModule({
@@ -35,7 +36,8 @@ import { InputNumberModule } from 'primeng/inputnumber';
     FormsModule,
     ReactiveFormsModule,
     InputTextModule,
-    InputNumberModule
+    InputNumberModule,
+    FileUploadModule
 
 
   ],

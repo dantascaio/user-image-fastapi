@@ -7,17 +7,23 @@ export interface IAllUsers {
     id: number;
     images : IImages[];
   }
-
-  export interface INewUser {
-    name: string 
-    images: IImages[];
-  }
-
   export interface IImages {
     base64: string;
     id: number;
     user_id: number;
   }
+
+  export interface INewUser {
+    name: string 
+    images: INewImages[];
+  }
+
+  export interface INewImages {
+    base64: Observable<any>;
+  }
+
+
+
 
 @Injectable({
     providedIn: 'root',
@@ -30,7 +36,6 @@ export interface IAllUsers {
 
 
     listarTodosUsuarios(): Observable<IAllUsers[]> {
-        console.log("ahhh")
         return this.http.get<IAllUsers[]>(
           `${this.pathUrlBase}/users`
         );
@@ -50,6 +55,7 @@ export interface IAllUsers {
       cadastrarUsuario(
         newUser: INewUser
       ): Observable<IAllUsers> {
+        console.log(newUser)
         return this.http.post<IAllUsers>(
           `${this.pathUrlBase}/users`,
           { ...newUser }
