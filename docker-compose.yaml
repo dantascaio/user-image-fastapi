@@ -28,6 +28,15 @@ services:
       - 8000:8000
     depends_on:
       - db
+  user_profile:
+    build:
+      context: ./webApp/user-profile/
+      dockerfile: Dockerfile
+    ports:
+      - 4200:4200
+    depends_on:
+      - db
+      - user_image_fastapi
 # Names our volume
 volumes:
   my-db:
